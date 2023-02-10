@@ -1,0 +1,17 @@
+<%# <div class="w-full">
+    <%= render 'groups/group_nav'%>
+
+    <%# <div id="memberships" class="min-w-full"> %>
+    <%# <% @memberships.each do |membership| %> 
+      <%# <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600"><%= membership.name %>
+    <%# <% end %> 
+  <%# </div> %>
+<%# </div> %> 
+
+<div class="w-full">
+    <%= render 'groups/group_nav'%>
+
+    <div id="groups" class="min-w-full">
+        <%= render @memberships %>
+    </div>
+</div>
