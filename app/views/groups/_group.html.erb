@@ -1,7 +1,7 @@
 <div id="<%= dom_id group %>">
   <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= group.name %>
+    <strong class=" font-medium "><%= link_to  group.name, group %></strong>
+    <%# <%= group.name %>
   </p>
 
 
@@ -9,10 +9,10 @@
     <% if !group.users.include?(current_user) && group.creator_id != current_user.id %>
     <%= link_to "Join this group", join_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <% end %>
-    <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%# <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     
     <% if current_user.id == group.creator_id%>
-    <%= link_to 'Edit this group', edit_group_path(group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this group', edit_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <% end %>
 
     <hr class="mt-6">

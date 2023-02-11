@@ -9,6 +9,9 @@ class GroupsController < ApplicationController
 
   # GET /groups/1 or /groups/1.json
   def show
+    @post = @group.posts.new
+    @posts = @group.posts.all
+    @members = @group.users.all
   end
 
   # GET /groups/new
@@ -40,7 +43,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       unless current_user.id == @group.creator_id
-        redirect_to groups_url, alert: "You cannot edit this group" and return
+        redirect_to groups_url, alert: "You cannot edit this group as you are not the creator" and return
       end
       if @group.update(group_params)
         format.html { redirect_to group_url(@group), notice: "Group was successfully updated." }
@@ -63,7 +66,6 @@ class GroupsController < ApplicationController
   end
 
   def join
-    
     @m = @group.memberships.build(:user_id => current_user.id)
     respond_to do |format|
       if @m.save

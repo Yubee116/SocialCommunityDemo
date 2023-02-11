@@ -2,7 +2,7 @@
   <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-600"><%= link_to  post.title, post %></h1>
   <p class="leading-tight mt-0 mb-2"><%= post.content %></p>
 
-  <%= link_to 'View post', post_path(post), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= link_to "View post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 
   <% if action_name != "show" %>
     <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
