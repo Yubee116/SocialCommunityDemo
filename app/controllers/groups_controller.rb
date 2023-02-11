@@ -70,7 +70,7 @@ class GroupsController < ApplicationController
         format.html { redirect_to(@group, :notice => 'You have joined this group.') }
         format.xml  { head :ok }
       else
-        format.html { redirect_to(@group, :notice => 'Join error.') }
+        format.html { redirect_to(@group, :alert => 'Join error. You are already a member of this group') }
         format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
       end
     end
