@@ -11,7 +11,7 @@ class MembershipsController < ApplicationController
 
         respond_to do |format|
             if @membership.save
-                format.html { redirect_to group_url(@membership), notice: "You have joined the group." }
+                format.html { redirect_to group_url(@membership.group), notice: "You have joined the group." }
                 format.json { render :show, status: :created, location: @membership }
             else
                 format.html { redirect_to groups_url, alert: "Unable to join. You are probably already a member of this group" }
