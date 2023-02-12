@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
+        format.html { redirect_to post_url(@post), notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -70,9 +70,15 @@ class CommentsController < ApplicationController
       @post = Post.find(comment_params[:post_id])
     end
 
+    def
+
     def update_post_activity
       @post.last_activity = Time.now
       @post.save
+
+      @group = Group.find(@post.group_id)
+      @group.last_activity = Time.now
+      @group.save
     end
 
     # Only allow a list of trusted parameters through.

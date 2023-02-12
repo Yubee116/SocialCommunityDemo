@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, :check_is_creator, only: %i[ show edit update destroy ]
   before_action :set_group, :check_is_member, :check_is_group_creator, only: %i[ create update ]
-  after_action :update_group_activity, only: %i[ create update ]
+  # after_action :update_group_activity, only: %i[ create update ]
 
   # GET /posts or /posts.json
   def index
@@ -30,6 +30,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if (@is_group_creator && @post.save) || (@is_member && @post.save)
+        update_group_activity
         format.html { redirect_to group_url(@group), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
@@ -43,10 +44,11 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     respond_to do |format|
-      unless @is_group_creator || @is_creator
+      unless @is_creator || @is_group_creator 
         redirect_to post_url(@post), alert: "You cannot edit this post" and return
       end
       if @post.update(post_params)
+        update_group_activity
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -62,6 +64,7 @@ class PostsController < ApplicationController
       redirect_to post_url(@post), alert: "You cannot delete this post" and return
     end
     @post.destroy
+    update_group_activity
 
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
