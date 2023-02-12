@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :set_group, only: %i[ create update ]
+  before_action :set_group, :check_is_member, :check_is_group_creator, only: %i[ create update ]
   after_action :update_group_activity, only: %i[ create update ]
 
   # GET /posts or /posts.json
@@ -28,11 +28,12 @@ class PostsController < ApplicationController
     @post = Post.new(post_params.merge(user_id: current_user.id))
 
     respond_to do |format|
-      if @post.save
+      if (@is_group_creator && @post.save) || (@is_member && @post.save)
         format.html { redirect_to group_url(@group), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        validation_message = @is_member ?  @post.errors : "Unable to create post as you are not a member of the group"
+        format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: validation_message  }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -76,6 +77,17 @@ class PostsController < ApplicationController
       @group.save
     end
 
+    def check_is_member
+      @is_member = current_user.memberships.where(group_id: post_params[:group_id]).exists?
+    end
+
+    def check_is_group_creator
+      @is_group_creator = @group.creator_id == current_user.id
+    end
+
+    def check_is_creator
+      @is_creator = @post.user_id == current_user.id
+    end
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content, :group_id)
