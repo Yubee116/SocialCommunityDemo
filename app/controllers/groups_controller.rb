@@ -65,19 +65,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def join
-    @m = @group.memberships.build(:user_id => current_user.id)
-    respond_to do |format|
-      if @m.save
-        format.html { redirect_to(@group, :notice => 'You have joined this group.') }
-        format.xml  { head :ok }
-      else
-        format.html { redirect_to(@group, :alert => 'Join error. You are already a member of this group') }
-        format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   def created_by_me
     @groups = Group.where(creator_id: current_user.id).all
   end
