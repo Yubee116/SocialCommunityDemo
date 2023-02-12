@@ -1,23 +1,20 @@
 <div id="<%= dom_id comment %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Content:</strong>
+  <p class="mb-2">
+    <%# <strong class="block font-medium mb-1">Content:</strong> %>
     <%= comment.content %>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Parent:</strong>
-    <%= comment.parent_id %>
-  </p>
+  <div class="flex flex-wrap justify-start space-x-2">
+    <span
+      class="ml-1 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+      <%= comment.user.email %> commented <%= time_ago_in_words(comment.created_at) %> ago
+    </span>
+    <span
+      class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+      <%= link_to 'Reply', new_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block' %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">User:</strong>
-    <%= comment.user_id %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Post:</strong>
-    <%= comment.post_id %>
-  </p>
+    </span>
+  </div>
 
   <% if action_name != "show" %>
     <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>

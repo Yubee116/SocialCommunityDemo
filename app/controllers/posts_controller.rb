@@ -8,6 +8,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = @post.comments.build
+    @comments = @post.comments.all
   end
 
   # GET /posts/new
@@ -66,6 +68,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :user_id, :group_id)
+      params.require(:post).permit(:title, :content, :group_id)
     end
 end
