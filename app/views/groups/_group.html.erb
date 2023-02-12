@@ -26,11 +26,12 @@
   <div class="flex flex-wrap justify-start space-x-2">
     <span
       class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-      <%= group.users.count %> members
+      <%= pluralize(group.users.count, "Member") %>
+      
     </span>
     <span
       class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-      <%= group.posts.count %> Posts
+      <%= pluralize(group.posts.count, "Post") %>
     </span>
     <span
       class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
