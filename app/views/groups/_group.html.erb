@@ -7,7 +7,11 @@
 
   <% if action_name != "show" %>
     <% if !group.users.include?(current_user) && group.creator_id != current_user.id %>
-    <%= link_to "Join this group", join_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%# <%= link_to "Join this group", join_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= form_with(url: memberships_path , method: "post") do |f| %>
+      <%= text_field(:memberships, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
+      <%= f.submit 'Join this group',  class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <% end %>
     <% end %>
     <%# <%= link_to "Show this group", group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     
