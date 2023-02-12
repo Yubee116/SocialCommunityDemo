@@ -43,7 +43,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       unless current_user.id == @group.creator_id
-        redirect_to groups_url, alert: "You cannot edit this group as you are not the creator" and return
+        redirect_to group_url(@group), alert: "You cannot edit this group as you are not the creator" and return
       end
       if @group.update(group_params)
         format.html { redirect_to group_url(@group), notice: "Group was successfully updated." }
