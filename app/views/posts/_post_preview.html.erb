@@ -1,0 +1,26 @@
+<div class="my-6" id="<%= dom_id post %>">
+  <h1 class="font-medium leading-tight text-2xl mt-0 mb-2 text-600"><%= link_to  post.title, post %></h1>
+  <p class="leading-tight mt-0 text-justify mb-2"><%= post.content.truncate(400, separator: ' ') %></p>
+  <div class="flex flex-wrap justify-space-between space-x-2">
+    <span
+      class="text-gray-500 text-sm flex align-center w-max ">
+      <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" if post.comments.count > 0 && post.last_activity %>
+    </span>
+    <%# <span %>
+    <%# class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease"> %>
+    <%# <%= link_to 'Reply', new_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block' %>
+    <%# </span> %>
+    <span
+      class="text-gray-500 text-sm flex align-end w-max active:bg-gray-300 transition duration-300 ease">
+      Created by <%= post.user.email %>
+    </span>
+  </div>
+
+  <%= link_to "View Post <i class=\"fa-solid mr-2 fa-arrow-right\"></i> ".html_safe, post, class: "py-3 inline-block font-medium" %>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

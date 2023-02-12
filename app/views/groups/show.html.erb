@@ -17,7 +17,7 @@
     <h2 class="font-medium leading-tight text-3xl mt-6 mb-2 text-gray-600"> All Posts </h2>
     <% if @posts.count > 0 %>
       <% @posts.each do |post| %>
-        <%= render "posts/post", post: post %>
+        <%= render "posts/post_preview", post: post %>
       <% end %>
     <% else %>
       <p> No posts in this group </p>
