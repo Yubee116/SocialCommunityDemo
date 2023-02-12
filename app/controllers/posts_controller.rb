@@ -12,6 +12,7 @@ class PostsController < ApplicationController
   def show
     @comment = @post.comments.build
     @comments = @post.comments.all
+    @group = @group
   end
 
   # GET /posts/new
@@ -42,6 +43,9 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     respond_to do |format|
+      unless @is_group_creator || @is_creator
+        redirect_to post_url(@post), alert: "You cannot edit this post" and return
+      end
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
@@ -54,6 +58,9 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    unless @is_group_creator || @is_creator
+      redirect_to post_url(@post), alert: "You cannot delete this post" and return
+    end
     @post.destroy
 
     respond_to do |format|
