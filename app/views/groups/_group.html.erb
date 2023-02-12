@@ -40,7 +40,7 @@
     </span>
     <span
       class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
-      <%= "Last activity #{time_ago_in_words(group.created_at)} ago" if group.created_at %>
+      <%= "Last activity #{time_ago_in_words(group.last_activity)} ago" if group.last_activity %>
     </span>
   </div>
   <hr class="mt-3">

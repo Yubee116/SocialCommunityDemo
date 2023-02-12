@@ -1,9 +1,11 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_group, only: %i[ create update ]
+  after_action :update_group_activity, only: %i[ create update ]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -24,7 +26,6 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params.merge(user_id: current_user.id))
-    @group = Group.find(post_params[:group_id])
 
     respond_to do |format|
       if @post.save
@@ -64,6 +65,15 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+    
+    def set_group
+      @group = Group.find(post_params[:group_id])
+    end
+
+    def update_group_activity
+      @group.last_activity = Time.now
+      @group.save
     end
 
     # Only allow a list of trusted parameters through.

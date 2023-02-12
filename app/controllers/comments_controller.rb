@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ create update ]
+  after_action :update_post_activity, only: %i[ create update ]
 
   # GET /comments or /comments.json
   def index
@@ -62,6 +64,15 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+    end
+
+    def set_post
+      @post = Post.find(comment_params[:post_id])
+    end
+
+    def update_post_activity
+      @post.last_activity = Time.now
+      @post.save
     end
 
     # Only allow a list of trusted parameters through.
