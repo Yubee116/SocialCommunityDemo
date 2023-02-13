@@ -1,12 +1,12 @@
 <div class="md:w-2/3 w-full flex">
-  <div class="">
+  <div class="w-full">
     <%= render @post %>
 
     <%= link_to 'Edit this post', edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
       <%= button_to 'Destroy this post', post_path(@post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
     </div>
-    <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to posts ".html_safe, posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to posts ".html_safe, group_url(@group.id), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     
     <h2 class="font-medium leading-tight text-3xl mt-6 mb-2 text-gray-600"> Comments </h2>
     <% @comments.each do |comment| %>

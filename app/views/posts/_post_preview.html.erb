@@ -1,7 +1,7 @@
 <div class="my-6" id="<%= dom_id post %>">
   <h1 class="font-medium leading-tight text-2xl mt-0 mb-2 text-600"><%= link_to  post.title, post %></h1>
   <p class="leading-tight mt-0 text-justify mb-2"><%= post.content.truncate(400, separator: ' ') %></p>
-  <div class="flex flex-wrap justify-space-between space-x-2">
+  <div class="flex flex-wrap justify-between w-2/3 space-x-2">
     <span
       class="text-gray-500 text-sm flex align-center w-max ">
       <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" if post.comments.count > 0 && post.last_activity %>
