@@ -13,6 +13,8 @@
     </div>
     <% if @group.users.include?(current_user) || current_user.id == @group.creator_id %>
       <%= render "posts/form", post: @post %>
+    <% else %>
+      <p class="font-medium text-green-600 animate-pulse"> Join the group to be able to create posts and join conversations in the comments! </p>
     <% end %>
     <h2 class="font-medium leading-tight text-3xl mt-6 mb-2 text-gray-600"> All Posts </h2>
     <% if @posts.count > 0 %>
@@ -40,18 +42,18 @@
       <%# <%= link_to 'New post', new_post_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
       <% if current_user.id == @group.creator_id %>
         <h1 class="font-bold text-xl"> Members 
-          </h1>
-            <% if @members.count > 0 %>
-              <ul class="flex flex-col overflow-hidden justify-left ">
-                <% @members.each do |member| %>
-                  <li class="my-1 flex"> <%= member.email %> <%= link_to "x", membership_path( {:user_id => member.id, :group_id => @group.id}), class: "border ml-2 px-2 inline-block text-red-500 font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to remove this user?" } %> </li> 
-                  <%# <%= render "membership/post", post: post %>
-                <% end %>
-              </ul>
-            <% else %>
-              <p>This group has no users</p>
+        </h1>
+        <% if @members.count > 0 %>
+          <ul class="flex flex-col overflow-hidden justify-left ">
+            <% @members.each do |member| %>
+              <li class="my-1 flex"> <%= member.email %> <%= link_to "x", membership_path( {:user_id => member.id, :group_id => @group.id}), class: "border ml-2 px-2 inline-block text-red-500 font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to remove this user?" } %> </li>
+              <%# <%= render "membership/post", post: post %>
             <% end %>
-          <% end %>
-        </div>
-      </aside>
+          </ul>
+        <% else %>
+          <p>This group has no users</p>
+        <% end %>
+      <% end %>
     </div>
+  </aside>
+</div>

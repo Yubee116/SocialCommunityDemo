@@ -10,31 +10,29 @@
             Join Group <i class="fa-solid fa-user-plus"></i>
           <% end %>
         <% end %>
-      <%# <% elsif group.users.include?(current_user) %> 
+        <%# <% elsif group.users.include?(current_user) %>
         <%# <div class="inline-block ml-2"> %>
-          <%# <%= link_to "Leave Group <i class=\"fa-solid fa-sign-out\"></i>".html_safe, "#{memberships_path}/#{group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-200 inline-block font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to leave the group?" } %> 
-            <%# Leave Group %>
-          <%# <% end %> 
-          <%#= TO Do LEave Group button or link to  %>
+        <%# <%= link_to "Leave Group <i class=\"fa-solid fa-sign-out\"></i>".html_safe, "#{memberships_path}/#{group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-200 inline-block font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to leave the group?" } %>
+        <%# Leave Group %>
+        <%# <% end %>
+        <%#= TO Do LEave Group button or link to  %>
         <%# </div> %>
-      <% end %> 
+      <% end %>
     <% end %>
     <% if action_name == "show" || action_name == "update" %>
-      
-        <div class="flex flex-wrap justify-start width-50%">
-          <% if current_user.id == group.creator_id%>
-            <div class="inline-block ml-2">
-              <%= link_to '', edit_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium fa-solid fa-gear" %>
-            </div>
-            <div class="inline-block ml-2">
-              <%= button_to '', group_path(@group), method: :delete, class: "rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash" %>
-            </div>
-          <% end %>
+      <div class="flex flex-wrap justify-start width-50%">
+        <% if current_user.id == group.creator_id%>
           <div class="inline-block ml-2">
-            <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to groups ".html_safe, groups_path, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-          </div>  
+            <%= link_to '', edit_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium fa-solid fa-gear" %>
+          </div>
+          <div class="inline-block ml-2">
+            <%= button_to '', group_path(@group), method: :delete, class: "rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to delete this group? \nAll related posts and their comments will be deleted as well" }%>
+          </div>
+        <% end %>
+        <div class="inline-block ml-2">
+          <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to groups ".html_safe, groups_path, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
         </div>
-      
+      </div>
     <% end %>
   </div>
   <div class="flex flex-wrap justify-start space-x-2">
