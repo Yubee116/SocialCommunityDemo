@@ -64,7 +64,6 @@ class PostsController < ApplicationController
       redirect_to post_url(@post), alert: "You cannot delete this post" and return
     end
     @post.destroy
-    update_group_activity
 
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
