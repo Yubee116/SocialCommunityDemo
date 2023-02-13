@@ -1,14 +1,24 @@
 <div class="my-6" id="<%= dom_id post %>">
-  <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-600"><%= link_to  post.title, post %></h1>
-  <p class="leading-tight text-justify mt-0 mb-2"><%= post.content %></p>
-
+  <div class="flex flex-wrap justify-between mb-5">
+    <div class="flex ">
+    <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-600"><%= link_to  post.title.titleize, post %></h1>
+    <%= button_to '',  post_path(post), method: :delete, class: "ml-6 rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash" %>
+    </div>
+    
+    <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to posts ".html_safe, group_url(group.id), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  </div>
+  <p class="leading-tight mt-0 mb-2"><%= simple_format(post.content.gsub("\n", "<br>"), class: 'text-justify') %></p>
   <div class="flex flex-wrap justify-end space-x-2">
     <span
       class="ml-1 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
-      Created by <%= post.user.email %>
+      &#x2022 Created by 
+      <% if post.user == current_user %>
+        You
+      <% else %>
+        <%= post.user.email %>
+      <% end %>
     </span>
   </div>
-
   <% if action_name != "show" %>
     <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>

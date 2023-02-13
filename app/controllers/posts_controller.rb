@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if (@is_group_creator && @post.save) || (@is_member && @post.save)
         update_group_activity
-        format.html { redirect_to group_url(@group), notice: 'Post was successfully created.' }
+        format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         validation_message = @is_member ? @post.errors : 'Unable to create post as you are not a member of the group'
@@ -67,7 +67,7 @@ class PostsController < ApplicationController
     update_group_activity
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to group_url(@group), notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

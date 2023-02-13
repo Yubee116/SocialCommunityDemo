@@ -1,6 +1,6 @@
 <div class="mb-3 w-full"id="<%= dom_id group %>">
   <div class="flex flex-wrap justify-between width-50%">
-    <h1 class=" font-bold mb-2 text-3xl"><%= link_to  group.name, group %> </h1>
+    <h1 class=" font-bold mb-2 text-3xl"><%= link_to  group.name.titleize, group %> </h1>
     <% if action_name == "index" || action_name == "create" %>
       <% if !group.users.include?(current_user) && group.creator_id != current_user.id %>
         <%= form_with(url: memberships_path , method: "post") do |f| %>

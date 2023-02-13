@@ -5,6 +5,9 @@
   </div>
 
   <div id="posts" class="min-w-full">
-    <%= render @posts %>
+    <%# <%= render @posts %>
+    <% @posts.each do |post| %>
+    <%= render "posts/post_preview", post: post %>
+    <% end %>
   </div>
 </div>
