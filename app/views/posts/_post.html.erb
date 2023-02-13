@@ -1,8 +1,13 @@
 <div class="my-6" id="<%= dom_id post %>">
   <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-600"><%= link_to  post.title, post %></h1>
-  <p class="leading-tight mt-0 mb-2"><%= post.content %></p>
+  <p class="leading-tight text-justify mt-0 mb-2"><%= post.content %></p>
 
-  <%= link_to "View post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <div class="flex flex-wrap justify-end space-x-2">
+    <span
+      class="ml-1 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+      Created by <%= post.user.email %>
+    </span>
+  </div>
 
   <% if action_name != "show" %>
     <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
