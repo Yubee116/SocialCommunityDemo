@@ -29,17 +29,22 @@
         <%# <%= link_to "Join this group", join_group_path(@group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
         <%= form_with(url: memberships_path , method: "post") do |f| %>
           <%= text_field(:memberships, :group_id, value: @group.id, class: 'form-control' ,style:"display:none;")  %>
-          <%= f.submit 'Join this group',  class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+          <%# <%= f.submit "Join Group  #{icon('fa-sign-out', 'fa-solid')}".html_safe,  class: "rounded-lg py-3 ml-2 px-5 bg-green-200 inline-block font-medium cursor-pointer" %>
+          <%= button_tag type: 'submit', class: "rounded-lg py-3 ml-2 px-5 bg-green-200 inline-block hover:animate-pulse font-medium cursor-pointer" do %>
+            Join Group <i class="fa-solid fa-user-plus"></i>
+          <% end %>
         <% end %>
+      <% elsif @group.users.include?(current_user) && @group.creator_id != current_user.id %>
+        <%= link_to "Leave Group <i class=\"fa-solid fa-sign-out\"></i>".html_safe, "#{memberships_path}/#{@group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-200 inline-block hover:animate-pulse font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to leave the group?" } %>
       <% end %>
       <%# <%= link_to 'New post', new_post_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
       <% if current_user.id == @group.creator_id %>
         <h1 class="font-bold text-xl"> Members 
-          <h1>
+          </h1>
             <% if @members.count > 0 %>
-              <ul class="flex flex-col overflow-hidden">
+              <ul class="flex flex-col overflow-hidden justify-left ">
                 <% @members.each do |member| %>
-                  <li> <%= member.email %> </li>
+                  <li class="my-1 flex"> <%= member.email %> <%= link_to "x", membership_path( {:user_id => member.id, :group_id => @group.id}), class: "border ml-2 px-2 inline-block text-red-500 font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to remove this user?" } %> </li> 
                   <%# <%= render "membership/post", post: post %>
                 <% end %>
               </ul>

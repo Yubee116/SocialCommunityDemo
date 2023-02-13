@@ -1,30 +1,30 @@
-<div class="my-6 w-full"id="<%= dom_id group %>">
+<div class="mb-3 w-full"id="<%= dom_id group %>">
   <div class="flex flex-wrap justify-between width-50%">
-    <h1 class=" font-bold mb-2 text-3xl"><%= link_to  group.name, group %></h1>
+    <h1 class=" font-bold mb-2 text-3xl"><%= link_to  group.name, group %> </h1>
     <% if action_name == "index" || action_name == "create" %>
       <% if !group.users.include?(current_user) && group.creator_id != current_user.id %>
         <%= form_with(url: memberships_path , method: "post") do |f| %>
           <%= text_field(:memberships, :group_id, value: group.id, class: 'form-control' ,style:"display:none;")  %>
           <%# <%= f.submit "Join Group  #{icon('fa-sign-out', 'fa-solid')}".html_safe,  class: "rounded-lg py-3 ml-2 px-5 bg-green-200 inline-block font-medium cursor-pointer" %>
-          <%= button_tag type: 'submit', class: "rounded-lg py-3 ml-2 px-5 bg-green-200 inline-block font-medium cursor-pointer" do %>
+          <%= button_tag type: 'submit', class: "rounded-lg py-3 ml-2 px-5 bg-green-200 inline-block font-medium hover:animate-pulse cursor-pointer" do %>
             Join Group <i class="fa-solid fa-user-plus"></i>
           <% end %>
         <% end %>
-      <% elsif group.users.include?(current_user) %>
-        <div class="inline-block ml-2">
-          <%= link_to "Leave Group <i class=\"fa-solid fa-sign-out\"></i>".html_safe, "#{memberships_path}/#{group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-200 inline-block font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to leave the group?" } %>
+      <%# <% elsif group.users.include?(current_user) %> 
+        <%# <div class="inline-block ml-2"> %>
+          <%# <%= link_to "Leave Group <i class=\"fa-solid fa-sign-out\"></i>".html_safe, "#{memberships_path}/#{group.id}", class: "rounded-lg py-3 ml-2 px-5 bg-red-200 inline-block font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to leave the group?" } %> 
             <%# Leave Group %>
           <%# <% end %> 
           <%#= TO Do LEave Group button or link to  %>
-        </div>
-      <% end %>
+        <%# </div> %>
+      <% end %> 
     <% end %>
     <% if action_name == "show" || action_name == "update" %>
       
         <div class="flex flex-wrap justify-start width-50%">
           <% if current_user.id == group.creator_id%>
             <div class="inline-block ml-2">
-              <%= link_to '', edit_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium fa-solid fa-gear" %>
+              <%= link_to '', edit_group_path(group), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium fa-solid hover:animate-spin fa-gear" %>
             </div>
             <div class="inline-block ml-2">
               <%= button_to '', group_path(@group), method: :delete, class: "rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash" %>
