@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @comment = @post.comments.build
-    @comments = @post.comments.all
+    @comments = @post.comments.order(created_at: :desc)
     @group = @post.group
   end
 
@@ -28,13 +28,17 @@ class PostsController < ApplicationController
     @post = Post.new(post_params.merge(user_id: current_user.id))
 
     respond_to do |format|
-      if (@is_group_creator && @post.save) || (@is_member && @post.save)
+      unless @is_member || @is_group_creator
+        redirect_to group_url(@group),
+                    alert: 'Unable to create post as you are not a member of the group' and return
+      end
+
+      if @post.save
         update_group_activity
         format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        validation_message = @is_member ? @post.errors : 'Unable to create post as you are not a member of the group'
-        format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: validation_message }
+        format.html { redirect_to group_url(@group), status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -60,9 +64,10 @@ class PostsController < ApplicationController
   def destroy
     # redirect_to post_url(@post), alert: 'You cannot delete this post' and return unless @is_group_creator || @is_creator
     @group = @post.group
-    unless  @is_creator || @group.creator_id == current_user.id
-        redirect_to post_url(@post), alert: "You cannot delete this post" and return
+    unless @is_creator || @group.creator_id == current_user.id
+      redirect_to post_url(@post), alert: 'You cannot delete this post' and return
     end
+
     @post.destroy
     update_group_activity
 
