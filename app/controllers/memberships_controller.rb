@@ -7,12 +7,17 @@ class MembershipsController < ApplicationController
 
   # POST /memberships or /membership.json
   def create
-    @membership = Membership.new(membership_params.merge(user_id: current_user.id))
+    @membership = Membership.new(membership_params.except(:post_id).merge(user_id: current_user.id))
 
     respond_to do |format|
-      if @membership.save
-        format.html { redirect_to group_url(@membership.group), notice: 'You have joined the group.' }
-        format.json { render :show, status: :created, location: @membership }
+    if @membership.save
+        if membership_params[:post_id]
+            format.html { redirect_to post_url(membership_params[:post_id]), notice: 'You have joined the group.' }
+            format.json { render :show, status: :created, location: @membership }
+        else
+            format.html { redirect_to group_url(@membership.group), notice: 'You have joined the group.' }
+            format.json { render :show, status: :created, location: @membership }
+        end
       else
         format.html do
           redirect_to groups_url, alert: 'Unable to join. You are probably already a member of this group'
@@ -49,6 +54,6 @@ class MembershipsController < ApplicationController
   end
 
   def membership_params
-    params.fetch(:memberships, {}).permit(:group_id)
+    params.fetch(:memberships, {}).permit(:group_id, :post_id)
   end
 end

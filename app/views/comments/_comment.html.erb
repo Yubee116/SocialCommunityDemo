@@ -1,24 +1,40 @@
-<div id="<%= dom_id comment %>">
-  <p class="mb-2">
+<div class = "mb-4" id="<%= dom_id comment %>">
+  <p class="mb-1 font-small">
     <%# <strong class="block font-medium mb-1">Content:</strong> %>
-    <%= comment.content %>
+    <%= simple_format(comment.content.gsub("\n", "<br>")) %>
   </p>
-
-  <div class="flex flex-wrap justify-start space-x-2">
-    <span
-      class="ml-1 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
-      <%= comment.user.email %> commented <%= time_ago_in_words(comment.created_at) %> ago
-    </span>
-    <span
-      class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-      <%= link_to 'Reply', new_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block' %>
-
-    </span>
+  <div class="flex justify-between w-1/2 space-x-2">
+    <div>
+      <span
+      class="text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+        <% if comment.user == current_user %>
+          You
+        <% else %>
+          <%= comment.user.email %>
+        <% end %>
+        commented <%= time_ago_in_words(comment.created_at) %> ago
+      </span>
+    </div>
+    <div class="flex justify-between space-x-2">
+      <% if comment.user == current_user %>
+        <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= link_to 'Edit', edit_comment_path(comment), class: "" %>
+        </span>
+        <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= button_to 'Delete', comment_path(comment), method: :delete, class: 'd-block' %>
+        </span>
+      <% end %>
+      <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+        <%= link_to 'Reply', new_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block' %>
+      </span>
+    </div>
   </div>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this comment', edit_comment_path(comment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
+  <%# <% if action_name != "show" %>
+  <%# <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%# <%= link_to 'Edit this comment', edit_comment_path(comment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+  <%# <hr class="mt-6"> %>
+  <%# <% end %>
 </div>
