@@ -8,9 +8,4 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
 
-  before_save :set_last_activity
-
-    def set_last_activity
-        self.last_activity = Time.now
-    end
 end

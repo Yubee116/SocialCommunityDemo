@@ -2,33 +2,28 @@
   <h1 class="font-medium leading-tight text-2xl mt-0 mb-2 text-600"><%= link_to  post.title.titleize, post %></h1>
   <p class="leading-tight mt-0 text-justify mb-2"><%= post.content.truncate(400, separator: ' ') %></p>
   <div class="flex w-2/3 space-x-2">
-    <% if post.comments.count > 0 && post.last_activity %>
     <span
       class="text-gray-500 text-sm">
-      <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" if post.comments.count > 0 && post.last_activity %>
-    </span>
-    <% else %>
-    <span
-      class="text-gray-500 text-sm">
-       This post has no comments yet
-    </span>
+      <% if post.comments.count > 0 && post.last_activity %>
+        <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" %>
+      <% else %>
+        This post has no comments yet
+      </span>
     <% end %>
     <span
       class="text-gray-500 ml-12 text-sm">
       &#x2022 Created by 
-      <% if post.user == current_user %> 
-      You
+      <% if post.user == current_user %>
+        You
       <% else %>
-      <%= post.user.email %>
+        <%= post.user.email %>
       <% end %>
     </span>
   </div>
-
   <%= link_to "View Post <i class=\"fa-solid mr-2 fa-arrow-right\"></i> ".html_safe, post, class: "py-3 inline-block font-medium" %>
-
   <%# <% if action_name != "show" %>
-    <%# <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%# <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <%# <hr class="mt-6"> %>
+  <%# <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%# <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+  <%# <hr class="mt-6"> %>
   <%# <% end %>
 </div>

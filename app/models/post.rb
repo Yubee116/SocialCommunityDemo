@@ -5,10 +5,4 @@ class Post < ApplicationRecord
   validates :title, :content, presence: true
 
   has_many :comments, dependent: :destroy
-
-  before_save :set_last_activity
-
-    def set_last_activity
-        self.last_activity = Time.now
-    end
 end

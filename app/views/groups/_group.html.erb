@@ -46,7 +46,11 @@
     </span>
     <span
       class="px-4 py-1 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+      <% if group.last_activity %>
       <%= "Last activity #{time_ago_in_words(group.last_activity)} ago" if group.last_activity %>
+      <% else %>
+      This group has no activity yet
+      <% end %>
     </span>
   </div>
   <hr class="mt-4">

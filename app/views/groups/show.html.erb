@@ -12,7 +12,9 @@
       <%# <%= link_to 'Back to groups', groups_path, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     </div>
     <% if @group.users.include?(current_user) || current_user.id == @group.creator_id %>
+      <div>
       <%= render "posts/form", post: @post %>
+      </div> 
     <% else %>
       <p class="font-medium text-green-600 animate-pulse"> Join the group to be able to create posts and join conversations in the comments! </p>
     <% end %>
