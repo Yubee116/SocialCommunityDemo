@@ -1,0 +1,32 @@
+<div class = "mb-4 ijebu ml-6" id="<%= dom_id comment %>">
+  <p class="mb-1 font-medium text-green-500">
+    <%# <strong class="block font-medium mb-1">Content:</strong> %>
+    <%= simple_format(comment.content.gsub("\n", "<br>")) %>
+  </p>
+  <div class="flex justify-between w-1/2 space-x-2">
+    <div>
+      <span
+      class="text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+        <% if comment.user == current_user %>
+          You
+        <% else %>
+          <%= comment.user.email %>
+        <% end %>
+        commented <%= time_ago_in_words(comment.created_at) %> ago
+      </span>
+    </div>
+    <div class="flex justify-between space-x-2">
+      <% if comment.user == current_user %>
+        <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= link_to 'Edit', edit_comment_path(comment), class: "" %>
+        </span>
+        <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          <%= button_to 'Delete', comment_path(comment), method: :delete, class: 'd-block' %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
+

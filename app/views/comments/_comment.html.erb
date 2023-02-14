@@ -12,7 +12,11 @@
         <% else %>
           <%= comment.user.email %>
         <% end %>
-        commented <%= time_ago_in_words(comment.created_at) %> ago
+        <% if comment.updated_at - comment.created_at > 1 %>
+          edited <%= time_ago_in_words(comment.updated_at) %> ago
+        <% else %>
+          commented <%= time_ago_in_words(comment.created_at) %> ago
+        <% end %>
       </span>
     </div>
     <div class="flex justify-between space-x-2">
@@ -38,3 +42,10 @@
   <%# <hr class="mt-6"> %>
   <%# <% end %>
 </div>
+<% if comment.replies.any? %>
+  <% comment.replies.all.each do |reply| %>
+    <%= render "comments/reply", comment: reply %>
+  <% end %>
+<% end %>
+<%# <%= render "comments/reply_form", comment: comment, post: @post %>
+<%# <div id="reply-form-<%= comment.id "></div> %>

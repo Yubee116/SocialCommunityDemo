@@ -2,7 +2,7 @@ class MembershipsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @memberships = current_user.groups.all
+    @memberships = current_user.groups.all.order(created_at: :desc)
   end
 
   # POST /memberships or /membership.json

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :comments
   resources :posts
+    # resources :comments
+  # end
   resources :groups do
     collection do
       get :created_by_me

@@ -66,7 +66,7 @@ class GroupsController < ApplicationController
   end
 
   def created_by_me
-    @groups = Group.where(creator_id: current_user.id).all
+    @groups = Group.where(creator_id: current_user.id).all.order(created_at: :desc)
   end
 
   private
