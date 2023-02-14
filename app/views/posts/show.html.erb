@@ -14,7 +14,7 @@
       <% if @group.users.include?(current_user) || current_user.id == @group.creator_id %>
         <%= render "comments/form", comment: @comment%>
       <% else %>
-        <p class="font-medium text-green-600 animate-pulse"> Join the group to be able to join the conversation in the comments! </p>
+        <p class="font-medium text-green-600 my-6 animate-pulse"> Join the group to be able to join the conversation in the comments! </p>
       <% end %>
     </div>
   </div>
