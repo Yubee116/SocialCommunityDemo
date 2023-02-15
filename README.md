@@ -1,3 +1,5 @@
+View deployed app at https://secret-meadow-13172.herokuapp.com 
+
 # README
 
 This is a normal rails 7 app created with `rails new` with postgresql as the database and tailwind configured.
