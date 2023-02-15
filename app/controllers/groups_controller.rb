@@ -29,6 +29,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
+        format.turbo_stream { render turbo_stream: turbo_stream.prepend("groups", partial: 'groups/group', locals: {group: @group}) }
         format.html { redirect_to group_url(@group), notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -46,6 +47,7 @@ class GroupsController < ApplicationController
       end
 
       if @group.update(group_params)
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@group, partial: 'groups/group', locals: {group: @group}) }
         format.html { redirect_to group_url(@group), notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
