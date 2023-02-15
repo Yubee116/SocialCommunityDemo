@@ -1,9 +1,17 @@
-<div class="" id="<%= dom_id post %>">
+<div class="" id="post-<%= post.id%>"> 
   <div class="flex flex-wrap justify-between mb-5">
     <div class="flex ">
       <h1 class="font-medium leading-tight text-3xl mt-0 mb-2 text-600"><%= link_to  post.title.titleize, post %></h1>
       <% if post.user == current_user || group.creator_id == current_user.id %>
-        <%= button_to '',  group_path(group), method: :delete, class: "ml-6 rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to delete this post? \nAll related comments will be deleted as well" } %>
+        <%# <% link_to 'Edit'%> 
+        <%= button_to '', nil, remote: true, class: "mx-3 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium fa-solid fa-gear", 
+          data: {
+            controller: "posts",
+            action: "posts#toggleForm",
+            posts_form_param: "edit-post-form-#{post.id}",
+            posts_post_param: "post-#{post.id}"
+          } %>
+        <%= button_to '',  group_path(group), method: :delete, class: "mx-3 rounded-lg py-3 px-5 bg-red-200 text-white-200 inline-block font-medium fa-solid fa-trash", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to delete this post? \nAll related comments will be deleted as well" } %>
       <% end %>
     </div>
     <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to posts ".html_safe, group_url(group.id), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
@@ -25,4 +33,8 @@
     <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <% end %>
+</div>
+<div class="hidden" id="edit-post-form-<%= post.id %>">
+  <%= render "posts/form", post: post %>
+  <%= link_to "Cancel", group_path(@group), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>

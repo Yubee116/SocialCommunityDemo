@@ -1,26 +1,47 @@
 <div class="my-6" id="<%= dom_id post %>">
-  <h1 class="font-medium leading-tight text-2xl mt-0 mb-2 text-600"><%= link_to  post.title.titleize, post %></h1>
-  <p class="leading-tight mt-0 text-justify mb-2"><%= post.content.truncate(400, separator: ' ') %></p>
-  <div class="flex w-2/3 space-x-2">
-    <span
+  <div class="" id="post-<%= post.id%>">
+    <div>
+      <h1 class="font-medium leading-tight text-2xl mt-0 mb-2 text-600"><%= link_to  post.title.titleize, post %></h1>
+      <p class="leading-tight mt-0 text-justify mb-2"><%= post.content.truncate(400, separator: ' ') %></p>
+    </div>
+    <div class="flex w-2/3 space-x-4">
+      <span
       class="text-gray-500 text-sm">
-      <% if post.comments.count > 0 && post.last_activity %>
-        <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" %>
-      <% else %>
-        This post has no comments yet
-      </span>
-    <% end %>
-    <span
-      class="text-gray-500 ml-12 text-sm">
-      &#x2022 Created by 
-      <% if post.user == current_user %>
-        You
-      <% else %>
-        <%= post.user.email %>
+        <% if post.comments.count > 0 && post.last_activity %>
+          <%= "Last comment #{time_ago_in_words(post.last_activity)} ago" %>
+        <% else %>
+          This post has no comments yet
+        </span>
       <% end %>
-    </span>
+      <span
+      class="text-gray-500 text-sm">
+        &#x2022 Created by 
+        <% if post.user == current_user %>
+          You
+        <% else %>
+          <%= post.user.email %>
+        <% end %>
+      </span>
+      <% if post.user == current_user || current_user.id == @group.creator_id %>
+        <span class="text-gray-500 text-sm">
+          <%= link_to '&#x2022 Edit'.html_safe, nil, remote: true, class: "text-gray-500 hover:text-black text-sm cursor-pointer", 
+          data: {
+            controller: "posts",
+            action: "posts#toggleForm",
+            posts_form_param: "edit-post-form-#{post.id}",
+            posts_post_param: "post-#{post.id}"
+          } %>
+        </span>
+      <% end %>
+    </div>
+    <%= link_to "View Post <i class=\"fa-solid mr-2 fa-arrow-right\"></i> ".html_safe, post, class: "py-3 inline-block font-medium" %>
   </div>
-  <%= link_to "View Post <i class=\"fa-solid mr-2 fa-arrow-right\"></i> ".html_safe, post, class: "py-3 inline-block font-medium" %>
+  <div class="hidden" id="edit-post-form-<%= post.id %>">
+    <%= render "posts/form", post: post %>
+    
+    <%= link_to "Cancel", group_path(@group), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    
+  </div>
   <%# <% if action_name != "show" %>
   <%# <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <%# <%= link_to 'Edit this post', edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>

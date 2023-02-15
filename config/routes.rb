@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :comments
-  resources :posts
+  resources :posts, except: :index
     # resources :comments
   # end
   resources :groups do
