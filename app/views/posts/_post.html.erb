@@ -17,9 +17,9 @@
     <%= link_to "<i class=\"fa-solid mr-2 fa-arrow-left\"></i> Back to posts ".html_safe, group_url(group.id), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
   <p class="leading-tight mt-0 mb-2"><%= simple_format(post.content.gsub("\n", "<br>"), class: 'text-justify') %></p>
-  <div class="flex flex-wrap justify-end space-x-2">
+  <div class="my-3 flex flex-wrap justify-end space-x-2">
     <span
-      class="ml-1 text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
+      class="text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
       &#x2022 Created by 
       <% if post.user == current_user %>
         You
@@ -36,5 +36,11 @@
 </div>
 <div class="hidden" id="edit-post-form-<%= post.id %>">
   <%= render "posts/form", post: post %>
-  <%= link_to "Cancel", group_path(@group), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= link_to "Cancel", nil, remote: true, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium", 
+          data: {
+            controller: "posts",
+            action: "posts#toggleFormCancel",
+            posts_form_param: "edit-post-form-#{post.id}",
+            posts_post_param: "post-#{post.id}"
+          } %>
 </div>

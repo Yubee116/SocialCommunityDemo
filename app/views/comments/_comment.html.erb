@@ -1,51 +1,73 @@
 <div class = "mb-4" id="<%= dom_id comment %>">
-  <p class="mb-1 font-small">
-    <%# <strong class="block font-medium mb-1">Content:</strong> %>
-    <%= simple_format(comment.content.gsub("\n", "<br>")) %>
-  </p>
-  <div class="flex justify-between w-1/2 space-x-2">
-    <div>
-      <span
+  <div  id="comment-<%= comment.id%>">
+    <p class="mb-1 font-small">
+      <%# <strong class="block font-medium mb-1">Content:</strong> %>
+      <%= simple_format(comment.content.gsub("\n", "<br>")) %>
+    </p>
+    <div class="flex justify-between w-1/2 space-x-2">
+      <div>
+        <span
       class="text-gray-500 text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease">
-        <% if comment.user == current_user %>
-          You
-        <% else %>
-          <%= comment.user.email %>
-        <% end %>
-        <% if comment.updated_at - comment.created_at > 1 %>
-          edited <%= time_ago_in_words(comment.updated_at) %> ago
-        <% else %>
+          <% if comment.user == current_user %>
+            You
+          <% else %>
+            <%= comment.user.email %>
+          <% end %>
           commented <%= time_ago_in_words(comment.created_at) %> ago
+        </span>
+      </div>
+      <div class="flex justify-between space-x-2">
+        <% if comment.user == current_user || @group.creator_id == current_user.id %>
+          <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+            <%# <%= link_to 'Edit', edit_comment_path(comment), class: "" %>
+            <%= link_to 'Edit', nil, remote: true, 
+          data: {
+            controller: "comments",
+            action: "comments#toggleForm",
+            comments_form_param: "edit-comment-form-#{comment.id}",
+            comments_comment_param: "comment-#{comment.id}"
+          } %>
+          </span>
+          <span
+        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+            <%= button_to 'Delete', comment_path(comment), method: :delete, class: 'd-block', data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to delete this comment?" } %>
+          </span>
         <% end %>
-      </span>
-    </div>
-    <div class="flex justify-between space-x-2">
-      <% if comment.user == current_user %>
         <span
         class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-          <%= link_to 'Edit', edit_comment_path(comment), class: "" %>
+          <%= link_to 'Reply', nil, remote: true, 
+          data: {
+            controller: "comments",
+            action: "comments#toggleNewReply",
+            comments_form_param: "reply-form-#{comment.id}"
+          } %>
         </span>
-        <span
-        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-          <%= button_to 'Delete', comment_path(comment), method: :delete, class: 'd-block' %>
-        </span>
-      <% end %>
-      <span
-        class="px-4 rounded-full border border-gray-300 text-gray-500 text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-        <%= link_to 'Reply', new_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block' %>
-      </span>
+      </div>
     </div>
   </div>
-  <%# <% if action_name != "show" %>
-  <%# <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%# <%= link_to 'Edit this comment', edit_comment_path(comment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-  <%# <hr class="mt-6"> %>
-  <%# <% end %>
+</div>
+<div class="hidden" id="edit-comment-form-<%= comment.id %>">
+  <%= render "comments/form", comment: comment%>
+  <%= link_to 'Cancel', nil, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium", remote: true, 
+          data: {
+            controller: "comments",
+            action: "comments#toggleFormCancel",
+            comments_form_param: "edit-comment-form-#{comment.id}",
+            comments_comment_param: "comment-#{comment.id}"
+          } %>
+</div>
+<div class="hidden ml-6 mb-10" id="reply-form-<%= comment.id %>">
+  <%= render "comments/reply_form", comment: comment, post: @post %>
+  <%= link_to 'Cancel', nil, remote: true, 
+          data: {
+            controller: "comments",
+            action: "comments#toggleNewReplyCancel",
+            comments_form_param: "reply-form-#{comment.id}"
+          } %>
 </div>
 <% if comment.replies.any? %>
   <% comment.replies.all.each do |reply| %>
     <%= render "comments/reply", comment: reply %>
   <% end %>
 <% end %>
-<%# <%= render "comments/reply_form", comment: comment, post: @post %>
-<%# <div id="reply-form-<%= comment.id "></div> %>

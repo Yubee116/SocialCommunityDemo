@@ -11,7 +11,6 @@
       <% @comments.each do |comment| %>
         <% unless comment.parent_id || !comment.persisted? %>
         <%= render "comments/comment", comment: comment %>
-        <%= render "comments/reply_form", comment: comment, post: @post %>
         <% end %>
       <% end %>
       <% if @group.users.include?(current_user) || current_user.id == @group.creator_id %>
