@@ -1,5 +1,10 @@
 View deployed app at https://secret-meadow-13172.herokuapp.com 
 
+# Pending
+Non-exhaustive opportunies for improvement
+- Turb Stream Implementations: Post and comment/reply creation and update
+
+
 # README
 
 This is a normal rails 7 app created with `rails new` with postgresql as the database and tailwind configured.
