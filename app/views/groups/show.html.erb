@@ -48,7 +48,7 @@
         <% if @members.count > 0 %>
           <ul class="flex flex-col overflow-hidden justify-left ">
             <% @members.each do |member| %>
-              <li class="my-1 flex"> <%= member.email %> <%= link_to "x", membership_path( {:user_id => member.id, :group_id => @group.id}), class: "border ml-2 px-2 inline-block text-red-500 font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to remove this user?" } %> </li>
+              <li class="my-1 flex"> <%= member.email.split('@')[0].capitalize %> <%= link_to "x", membership_path( {:user_id => member.id, :group_id => @group.id}), class: "border ml-2 px-2 inline-block text-red-500 font-medium cursor-pointer", data: { turbo_method: "delete", turbo_confirm: "Are you sure you want to remove this user?" } %> </li>
               <%# <%= render "membership/post", post: post %>
             <% end %>
           </ul>

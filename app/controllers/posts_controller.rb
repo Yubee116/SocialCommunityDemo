@@ -38,7 +38,7 @@ class PostsController < ApplicationController
         format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { redirect_to group_url(@group), status: :unprocessable_entity }
+        format.html { redirect_to group_url(@group), status: :unprocessable_entity, alert: @post.errors }#"Please try again. #{@post.errors}" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

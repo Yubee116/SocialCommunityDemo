@@ -19,7 +19,7 @@
         <% if post.user == current_user %>
           You
         <% else %>
-          <%= post.user.email %>
+          <%= post.user.email.split('@')[0].capitalize %>
         <% end %>
       </span>
       <% if post.user == current_user || current_user.id == @group.creator_id %>
