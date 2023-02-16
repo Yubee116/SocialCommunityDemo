@@ -7,8 +7,8 @@
     </div>
   <% end %>
 <% else %>
-  <%= form_with(model: [Comment.new], class: "contents") do |form| %>
-    <%= form.text_area :content, rows: 2, placeholder: "Write your reply",class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 my-3 w-full" %>
+  <%= form_with(model: [Comment.new], class: "contents", data: {controller: "comments", action: "turbo:submit-end->comments#submit"}) do |form| %>
+    <%= form.text_area :content, rows: 2, data:{ comments_target: "contentField"}, placeholder: "Write your reply",class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 my-3 w-full" %>
     <%= form.hidden_field :parent_id, value: comment.id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
     <%= form.hidden_field :post_id, value: post.id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
     <div class="inline my-5">

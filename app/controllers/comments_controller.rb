@@ -32,10 +32,15 @@ class CommentsController < ApplicationController
 
       if @comment.save
         update_post_and_group_activity
-        format.html { redirect_to post_url(@post), notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        if @comment.parent_id.nil?
+          format.turbo_stream { render turbo_stream: turbo_stream.prepend('comments', partial: 'comments/comment', locals: {comment: @comment}) }
+        else
+          format.turbo_stream { render turbo_stream: turbo_stream.append("comment_#{@comment.parent_id}", partial: 'comments/reply', locals: {comment: @comment}) }
+        end
+          format.html { redirect_to post_url(@post), notice: 'Comment was successfully created.' }
+          format.json { render :show, status: :created, location: @comment }
       else
-        format.html { redirect_to post_url(@post), status: :unprocessable_entity }
+        format.html { redirect_to post_url(@post), status: :unprocessable_entity, alert: @comment.errors }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -53,7 +58,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to post_url(@post), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
-        format.html { redirect_to post_url(@post), status: :unprocessable_entity }
+        format.html { redirect_to post_url(@post), status: :unprocessable_entity, alert: @comment.errors }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

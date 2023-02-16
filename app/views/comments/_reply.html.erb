@@ -41,7 +41,7 @@
   <%= link_to 'Cancel', nil, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium", remote: true, 
           data: {
             controller: "comments",
-            action: "comments#toggleEditReplyCancel",
+            action: "comments#toggleEditReply",
             comments_form_param: "edit-comment-form-#{comment.id}",
             comments_comment_param: "comment-#{comment.id}"
           } %>

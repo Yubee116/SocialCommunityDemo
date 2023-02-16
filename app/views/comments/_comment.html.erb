@@ -9,7 +9,7 @@
   <%= link_to 'Cancel', nil, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium", remote: true, 
           data: {
             controller: "comments",
-            action: "comments#toggleFormCancel",
+            action: "comments#toggleEditComment",
             comments_form_param: "edit-comment-form-#{comment.id}",
             comments_comment_param: "comment-#{comment.id}"
           } %>
@@ -17,9 +17,10 @@
 <div class="hidden ml-6 mb-10" id="reply-form-<%= comment.id %>">
   <%= render "comments/reply_form", comment: comment, post: @post %>
   <%= link_to 'Cancel', nil, remote: true, 
+          class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium",
           data: {
             controller: "comments",
-            action: "comments#toggleNewReplyCancel",
+            action: "comments#toggleNewReply",
             comments_form_param: "reply-form-#{comment.id}"
           } %>
 </div>

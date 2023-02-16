@@ -22,7 +22,7 @@
         <%= link_to 'Edit', nil, remote: true, 
           data: {
             controller: "comments",
-            action: "comments#toggleForm",
+            action: "comments#toggleEditComment",
             comments_form_param: "edit-comment-form-#{@comment.id}",
             comments_comment_param: "comment-#{@comment.id}"
           } %>
