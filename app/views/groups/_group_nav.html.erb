@@ -1,6 +1,8 @@
-<div class="flex items-center justify-between my-4">
-  <div class="inline-flex" role="group">
-    <%= link_to 'All Groups', groups_path, class: "rounded-l
+<div class="sticky mb-8 top-0 bg-white">
+  <h1 class=" mb-2 text-blue-600 text-3xl"> Groups </h1>
+  <div class="flex items-center justify-between ">
+    <div class="inline-flex" role="group">
+      <%= link_to 'All Groups', groups_path, class: "rounded-l
           px-6
           py-2
           border-2 border-blue-600
@@ -14,7 +16,7 @@
           transition
           duration-150
           ease-in-out" %>
-    <%= link_to 'Created by me', created_by_me_groups_path, class: "px-6
+      <%= link_to 'Created by me', created_by_me_groups_path, class: "px-6
           py-2
           border-t-2 border-b-2 border-blue-600
           text-blue-600
@@ -27,7 +29,7 @@
           transition
           duration-150
           ease-in-out" %>
-    <%= link_to 'Where I\'m member', memberships_path, class: "rounded-r
+      <%= link_to 'Where I\'m member', memberships_path, class: "rounded-r
           px-6
           py-2
           border-2 border-blue-600
@@ -41,9 +43,9 @@
           transition
           duration-150
           ease-in-out" %>
-  </div>
-  <div class="flex justify-between items-center">
-    <%= link_to 'Create a new group', new_group_path, 
+    </div>
+    <div class="flex justify-between items-center">
+      <%= link_to 'Create a new group', new_group_path, 
           data: {turbo_frame: "modal"},
           class: "px-6
           py-2
@@ -58,5 +60,6 @@
           transition
           duration-150
           ease-in-out" %>
+    </div>
   </div>
 </div>

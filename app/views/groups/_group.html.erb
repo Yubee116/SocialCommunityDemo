@@ -1,4 +1,15 @@
 <div class="mb-3 w-full"id="<%= dom_id group %>">
+  <% if action_name == "show" || action_name == "update" %>
+  <span
+      class="text-gray-500 text-sm">
+        Created by 
+        <% if group.creator_id == current_user.id %>
+          You
+        <% else %>
+          <%= User.find(group.creator_id).email.split('@')[0].capitalize %>
+        <% end %>
+      </span>
+  <% end %>
   <div class="flex flex-wrap justify-between width-50%">
     <h1 class=" font-bold mb-2 text-3xl"><%= link_to  group.name.titleize, group %> </h1>
     <% if action_name == "index" || action_name == "create" %>
@@ -53,5 +64,5 @@
       <% end %>
     </span>
   </div>
-  <hr class="mt-4">
+  <hr class="mt-3">
 </div>
