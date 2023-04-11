@@ -1,18 +1,30 @@
-View deployed app at https://secret-meadow-13172.herokuapp.com 
+# Overview
+A lightweight community platform POC that allows users to register/sign up, create and join Groups, make posts within Groups, comment and reply to comments on posts in Groups to which they belong and lots more. 
 
-# Pending
-Non-exhaustive opportunies for improvement
-- Turb Stream Implementations: Post and comment/reply creation and update
+**Used Technologies:** <br>
+Rails 7, TailwindCSS, Hotwire: Turbo & Stimulus, ViewComponent, FontAwesome, Postgres, Heroku
 
+View live app at https://secret-meadow-13172.herokuapp.com 
+<br>
 
-# README
+Follow the instructions below to setup and run in your local environment:
 
-This is a normal rails 7 app created with `rails new` with postgresql as the database and tailwind configured.
+# Running the app locally
+1. Clone this repository and change directory
+```
+$ git clone https://github.com/Yubee116/SocialCommunityDemo.git
+$ cd SocialCommunityDemo 
+```  
 
-As part of the test, you might need to configure and install additional things like view compononents
+2. Run `bundle install`
 
-# Development
+3. Prepare the database: create, migrate and seed
+```
+$ rails db:create
+$ rails db:migrate
+$ rails db:seed
+```
 
-* Standard rails 7 workflow.
-* Make sure you create database (rails db:create).
-* Run server with `bin/dev`
+4. Start the sever by running the command `bin/dev`
+
+5. Open `http://localhost:3000` in your browser
